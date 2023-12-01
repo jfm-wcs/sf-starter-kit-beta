@@ -2,37 +2,34 @@ version: '3.4'
 
 services:
   web:
-    env_file:
-      - .env
-      - ../envs/.env-${GITHUB_REPOSITORY_NAME}
-    environment:
-      DATABASE_URL: mysql://${USER_NAME}:${USER_PASSWORD}@${DATABASE_SUBDOMAIN_NAME}-db:3306/${DB_NAME}?serverVersion=8&charset=utf8mb4
-      MAILER_DSN: smtp://${PROJECT_NAME}-mailhog:1025
     build: .
-    container_name: ${PROJECT_NAME:-project}-web
+    ports:
+      - "127.0.0.1:8000:80"
+    environment:
+      DATABASE_URL: mysql://user:password@database:3306/symfony?serverVersion=8&charset=utf8mb4
+    depends_on:
+      database:
+        condition: service_healthy
+  database:
+    image: mysql/mysql-server:8.0
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-prootpassword" ] # Command to check health.
+      interval: 5s # Interval between health checks.
+      timeout: 5s # Timeout for each health checking.
+      retries: 20 # Hou many times retries.
+      start_period: 10s
+    #        container_name: database
     volumes:
-      - ./public/uploads:/var/www/public/uploads
-    restart: always
-    networks:
-      - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.routers.${PROJECT_NAME:-project}-secure.entrypoints=websecure"
-      - "traefik.http.routers.${PROJECT_NAME:-project}-secure.rule=Host(`${PROJECT_NAME:-project}.${HOST:-localhost}`)"
+      - ./database-setup.sh:/docker-entrypoint-initdb.d/setup.sh
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
 
-  mailer:
-    image: mailhog/mailhog:latest
-    container_name: ${PROJECT_NAME:-project}-mailhog
-    networks:
-      - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.routers.mailhog-${PROJECT_NAME:-project}-secure.entrypoints=websecure"
-      - "traefik.http.routers.mailhog-${PROJECT_NAME:-project}-secure.rule=Host(`mailhog.${PROJECT_NAME:-project}.${HOST:-localhost}`)"
-      - "traefik.http.services.mailhog-${PROJECT_NAME:-project}.loadbalancer.server.port=8025"
-
-networks:
-  proxy:
-    external: true
+volumes:
+  db-data:
+    name: database
