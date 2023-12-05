@@ -1,5 +1,8 @@
 # Project 3 - Starter Kit - Symfony
 
+## Change Log
+See [CHANGELOG.md](CHANGELOG.md) for more information.
+
 ## Presentation
 
 This starter kit is here to easily start a repository for Wild Code School students.
@@ -43,7 +46,6 @@ It's symfony website-skeleton project with some additional library (webpack, fix
 1. Run `php ./vendor/bin/phpcs` to launch PHP code sniffer
 2. Run `php ./vendor/bin/phpstan analyse src --level max` to launch PHPStan
 3. Run `php ./vendor/bin/phpmd src text phpmd.xml` to launch PHP Mess Detector
-4. Run `./node_modules/.bin/eslint assets/js` to launch ESLint JS linter
 
 ### Windows Users
 
@@ -59,15 +61,18 @@ The `.editorconfig` file in root directory do this for you. You probably need `E
 `DATABASE_URL="mysql://root:password@database:3306/<choose_a_db_name>"`
 2. Install Docker Desktop an run the command:
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 3. Wait a moment and visit http://localhost:8000
 
 
 ## Deployment
 
-Some files are used to manage automatic deployments (using tools as Caprover, Docker and Github Action). Please do not modify them.
+Some files are used to manage automatic deployments (using Docker, GitHub Action to a Traefik environment). Please do not modify them.
 
+* [docker-compose.yml](/docker-compose.yml) Docker configuration for local development
+* [docker-compose.prod.yml](/docker-compose.prod.yml) Docker configuration for production
+* [.github/workflows/deploy-traefik.yml](/.github/workflows/deploy-traefik.yml) GitHub Action workflow to deploy Traefik
 * [Dockerfile](/Dockerfile) Web app configuration for Docker container
 * [docker-entry.sh](/docker-entry.sh) shell instruction to execute when docker image is built
 * [nginx.conf](/ginx.conf) Nginx server configuration
@@ -81,7 +86,6 @@ Some files are used to manage automatic deployments (using tools as Caprover, Do
 * [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 * [PHPStan](https://github.com/phpstan/phpstan)
 * [PHPMD](http://phpmd.org)
-* [ESLint](https://eslint.org/)
 * [Sass-Lint](https://github.com/sasstools/sass-lint)
 
 
