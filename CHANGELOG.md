@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing right now. [Open an issue](https://github.com/WildCodeSchool/symfony-projet3-starter-kit/issues) if you find something.
 
+## [1.0.2] - 2024-05-23
+
+### Added
+- AssetMapper with SymfonyCats/SassBundle to compile SCSS files to CSS files.
+
+### Removed
+- Remove Webpack Encore and all related files (yarn, npm…).
+
 ## [1.0.1] - 2023-12-04
 
 ### Added

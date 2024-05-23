@@ -13,6 +13,7 @@ if [ ${APP_ENV} != "prod" ]; then
   php bin/console doctrine:fixtures:load --quiet --no-interaction --no-debug
 fi
 
+
 php bin/console cache:clear
 php bin/console cache:warmup
 
@@ -23,6 +24,9 @@ chmod -R 777 /var/www/public
 # assets:install public
 # ckeditor:install and so on
 composer run post-install-cmd
+
+php bin/console importmap:install
+php bin/console asset-map:compile
 
 ## server config
 php-fpm -D &

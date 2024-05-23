@@ -3,6 +3,16 @@
 ## Change Log
 See [CHANGELOG.md](CHANGELOG.md) for more information.
 
+## For Windows Users
+
+:heavy_exclamation_mark: To do BEFORE CLONING REPOSITORY :heavy_exclamation_mark: :
+
+If you develop on Windows, edit your git configuration to change your end of line rules with this command :
+
+`git config --global core.autocrlf true`
+
+Then clone this Repository safely :white_check_mark:
+
 ## Presentation
 
 This starter kit is here to easily start a repository for Wild Code School students.
@@ -27,19 +37,19 @@ It's symfony website-skeleton project with some additional library (webpack, fix
 ### Prerequisites
 
 1. Check composer is installed
-2. Check yarn & node are installed
 
 ### Install
 
 1. Clone this project
 2. Run `composer install`
-3. Run `yarn install`
-4. Run `yarn encore dev` to build assets
+
 
 ### Working
 
 1. Run `symfony server:start` to launch your local php web server
-2. Run `yarn run dev --watch` to launch your local server for assets (or `yarn dev-server` do the same with Hot Module Reload activated)
+
+SCSS files are automatically compiled to CSS files with `symfonycasts/sass-bundle`.
+Thanks to `.symfony.local.yaml` file, you don't have to run `symfony console sass:build --watch` since it's already done by `symfony server:start`.
 
 ### Testing
 
@@ -57,13 +67,11 @@ The `.editorconfig` file in root directory do this for you. You probably need `E
 
 ### Run locally with Docker
 
-1. Fill DATABASE_URL variable in .env.local file with
-`DATABASE_URL="mysql://root:password@database:3306/<choose_a_db_name>"`
-2. Install Docker Desktop an run the command:
+1. Install Docker Desktop an run the command:
 ```bash
 docker compose up -d
 ```
-3. Wait a moment and visit http://localhost:8000
+2. Wait a moment and visit http://localhost:8000
 
 
 ## Deployment
